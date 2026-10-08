@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f2f2f7">
+	<title>Word Search Studio</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<main class="workspace">
+		<section class="controls" aria-labelledby="settings-heading">
+			<div class="controls-heading">
+				<h1 id="settings-heading">Puzzle settings</h1>
+				<button id="dark-mode" class="theme-control" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch to dark mode"><span id="theme-moon" aria-hidden="true">&#9790;</span><span id="theme-sun" aria-hidden="true" hidden>&#9728;&#65038;</span></button>
+			</div>
+			<div class="settings-grid">
+			<div class="title-row">
+				<label class="field-label" for="puzzle-title">Puzzle title</label>
+				<input id="puzzle-title" type="text" maxlength="80" value="Our favorite pets">
+			</div>
+			<section class="control-section words-section" aria-labelledby="words-heading">
+				<div class="section-heading"><h2 id="words-heading">Words</h2><span id="word-count" class="count">10</span></div>
+				<form id="word-form" novalidate>
+					<label class="sr-only" for="word-input">Words, separated by commas</label>
+					<input id="word-input" type="text" placeholder="CAT, DOG, HAMSTER" spellcheck="false" autocomplete="off">
+					<button class="secondary add-button" type="submit"><span aria-hidden="true">+</span> Add words</button>
+				</form>
+				<p id="word-feedback" class="field-feedback" role="status"></p>
+				<div id="word-list" class="word-chips" aria-label="Included words"></div>
+				<button id="clear-words" class="text-button" type="button">Clear words</button>
+			</section>
+
+			<div class="placement-settings">
+			<div class="dimensions">
+				<label for="rows">Rows<input id="rows" type="number" min="1" max="60" step="1" value="15" required></label>
+				<label for="columns">Columns<input id="columns" type="number" min="1" max="60" step="1" value="15" required></label>
+			</div>
+			<fieldset class="control-section">
+				<legend>Alignment</legend>
+				<div class="toggle-list">
+					<label><span>Horizontal</span><input id="horizontal" type="checkbox" role="switch" checked></label>
+					<label><span>Vertical</span><input id="vertical" type="checkbox" role="switch" checked></label>
+					<label><span>Diagonal</span><input id="diagonal" type="checkbox" role="switch" checked></label>
+				</div>
+				<div class="reading-directions">
+					<label><span>Forward</span><input id="forward" type="checkbox" role="switch" checked></label>
+					<label><span>Backward</span><input id="backward" type="checkbox" role="switch"></label>
+				</div>
+			</fieldset>
+
+			<fieldset class="control-section density-section">
+				<legend>Placement density</legend>
+				<div class="segmented">
+					<label><input type="radio" name="density" value="spacious"><span>Spacious</span></label>
+					<label><input type="radio" name="density" value="balanced" checked><span>Balanced</span></label>
+					<label><input type="radio" name="density" value="compact"><span>Compact</span></label>
+				</div>
+			</fieldset>
+			</div>
+			</div>
+			<div class="action-bar">
+				<div class="generation-actions">
+					<button id="generate" class="primary" type="button"><span aria-hidden="true">&#8635;</span> Generate puzzle</button>
+					<nav class="history-controls" aria-label="Puzzle history">
+						<button id="history-previous" class="secondary history-button" type="button" aria-label="Previous puzzle" title="Previous puzzle" disabled><span aria-hidden="true">&#8592;</span></button>
+						<span id="history-position" class="history-position" aria-label="No saved puzzles">0 / 0</span>
+						<button id="history-next" class="secondary history-button" type="button" aria-label="Next puzzle" title="Next puzzle" disabled><span aria-hidden="true">&#8594;</span></button>
+					</nav>
+				</div>
+				<div class="preview-actions">
+					<label class="solution-control" for="solution"><input id="solution" type="checkbox" role="switch" checked disabled><span>Solution</span></label>
+					<div class="export-control">
+						<label class="sr-only" for="export-format">Export format</label>
+						<select id="export-format"><option value="png">PNG image</option><option value="jpeg">JPEG image</option><option value="pdf">Print / Save PDF</option></select>
+						<button id="export" class="secondary" type="button" disabled>Export</button>
+					</div>
+				</div>
+			</div>
+			<p id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></p>
+			<button id="resize-grid" class="secondary" type="button" hidden></button>
+			<p id="export-status" class="export-status" role="status" aria-live="polite"></p>
+		</section>
+
+		<section class="preview" aria-labelledby="preview-heading">
+			<h2 id="preview-heading" class="sr-only">Your word search</h2>
+			<div class="preview-meta"><span id="dirty-badge" class="dirty-badge" hidden>Settings changed</span></div>
+			<div id="puzzle-sheet" class="puzzle-sheet" aria-busy="false">
+				<div class="paper-heading"><span>WORD SEARCH</span><button id="copy-grid" class="secondary copy-button" type="button" aria-label="Copy grid" title="Copy grid" disabled><span aria-hidden="true">&#10697;</span></button></div>
+				<h3 id="sheet-title">Our favorite pets</h3>
+				<div class="grid-viewport" tabindex="0" aria-label="Puzzle grid, scrollable for large puzzles"><div id="grid" class="letter-grid" role="table" aria-label="Word-search letters"></div></div>
+				<div class="word-bank-heading"><h4>Words to find</h4><button id="copy-words" class="secondary copy-button" type="button" aria-label="Copy word list" title="Copy word list" disabled><span aria-hidden="true">&#10697;</span></button></div>
+				<ul id="word-bank" class="word-bank"></ul>
+			</div>
+		</section>
+	</main>
+	<footer class="app-footer">for GR <span role="img" aria-label="love">&#10084;&#65039;</span></footer>
+	<section id="print-puzzle" aria-label="Printable puzzle"></section>
+	<style id="print-page-style"></style>
+</body>
+</html>
